@@ -1,0 +1,24 @@
+350. E Intersection of two Arrays II
+
+class Solution {
+    public int[] intersect(int[] nums1, int[] nums2) {
+         HashMap<Integer, Integer> set = new HashMap<Integer, Integer>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        ArrayList<Integer> answer = new ArrayList<Integer>();
+        for(int i = 0; i<nums1.length; i++){
+            list.add(nums1[i]);
+        }
+        System.out.println(set);
+        for(int i = 0; i<nums2.length; i++){
+            if(list.contains(nums2[i])){
+                    list.remove(list.indexOf(nums2[i]));
+                    answer.add(nums2[i]);
+            }
+        }
+        int[] answer1 = new int[answer.size()];
+        for(int i = 0; i<answer.size(); i++){
+            answer1[i] = answer.get(i);
+        }
+                   return answer1;
+    }
+}

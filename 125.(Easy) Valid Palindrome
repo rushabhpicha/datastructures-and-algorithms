@@ -1,0 +1,20 @@
+
+// Check if a String is  a Valid Palindrome 
+
+class Solution {
+    public boolean isPalindrome(String s) {
+        // First make a String Alphanumeric
+        s = s.replaceAll("[^a-zA-Z0-9]", "").toLowerCase();
+        // Use for loop to check if the reverse is equal to the original
+        String reverse = "";
+        for(int i = s.length() -1; i>=0; i--){
+            reverse = reverse +s.charAt(i);
+        }
+        System.out.println(s);
+                System.out.println(reverse);
+
+
+    
+        return s.equals(reverse);
+    }
+}

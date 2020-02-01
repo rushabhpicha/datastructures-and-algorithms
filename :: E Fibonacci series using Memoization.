@@ -1,0 +1,19 @@
+// E Fibonacci series using Memoization.
+
+class Solution {
+    HashMap<Integer, Integer> map = new HashMap<Integer, Integer>();
+    public int fib(int N) {
+        int result;
+        if(map.containsKey(N))
+            return map.get(N);
+        
+        if(N < 2)
+            result = N;
+        else
+            result = fib(N - 1) + fib(N - 2);
+        
+        map.put(N, result);
+        return result;
+        
+    }
+}

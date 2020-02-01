@@ -1,0 +1,16 @@
+// E. 1051 Height Checker
+
+class Solution(object):
+    def heightChecker(self, heights):
+        """
+        :type heights: List[int]
+        :rtype: int
+        """
+        needed=sorted(heights)
+    
+        result=0
+        for i in range(len(heights)):
+            if heights[i]!= needed[i]:
+                result+=1
+
+        return result

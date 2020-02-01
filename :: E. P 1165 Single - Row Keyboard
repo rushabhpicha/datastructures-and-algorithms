@@ -1,0 +1,16 @@
+// E. P 1165 Single - Row Keyboard
+
+class Solution {
+    public int calculateTime(String keyboard, String word) {
+        int answer = 0;
+        int time = 0;
+        
+        int input = 0;
+        for(int i = 0; i<word.length(); i++){
+            char c = word.charAt(i);
+            time+=Math.abs(keyboard.indexOf(c) - input);
+            input = keyboard.indexOf(c);
+        }
+        return time;
+    }
+}

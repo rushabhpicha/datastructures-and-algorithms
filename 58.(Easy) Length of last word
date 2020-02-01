@@ -1,0 +1,17 @@
+
+// Find the length of last word in a string
+
+class Solution {
+    public int lengthOfLastWord(String s) {
+        String lastWord = "";
+        s = s.trim();
+	// Check from the end of the string, it an empty character comes just break the loop
+        for(int i = s.length() - 1; i>=0; i--){
+            if(s.charAt(i) == ' '){
+                break;
+            }
+            lastWord = lastWord + s.charAt(i);
+        }   
+        return lastWord.length();
+    }
+}
