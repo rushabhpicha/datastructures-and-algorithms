@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        
+        char[] first = s.toCharArray();
+        char[] second = t.toCharArray();
+        Arrays.sort(first);
+        Arrays.sort(second);
+        return Arrays.equals(first, second);
+    }
+}
+
+//Second Solution
+
+class Solution {
+    public boolean isAnagram(String s, String t) {
+        if(s.length() != t.length()) return false;
+        
+        int[] array = new int[26];
+        
+        for(int i = 0; i<s.length(); i++){
+            array[s.charAt(i) - 'a']++;
+            array[t.charAt(i) - 'a']--;
+        }
+        for(int q : array){
+            if(q != 0) return false;
+        }
+        return true;
+    }
+}

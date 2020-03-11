@@ -1,0 +1,20 @@
+class Solution {
+    public char findTheDifference(String s, String t) {
+        int[] array = new int[26];
+        
+        for(int i = 0; i<s.length(); i++){
+            array[s.charAt(i) - 'a']++;
+        }
+        for(int i = 0; i<t.length(); i++){
+            array[t.charAt(i) - 'a']--;
+        }
+        String total = "abcdefghijklmnopqrstuvwxyz";
+        char answer = 'a';
+        for(int i = 0; i<array.length; i++){
+            if(array[i] == -1){
+                answer = total.charAt(i);
+            }
+        }
+        return answer;
+    }
+}
