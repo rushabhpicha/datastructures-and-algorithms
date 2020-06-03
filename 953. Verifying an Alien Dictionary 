@@ -1,0 +1,29 @@
+class Solution {
+    public boolean isAlienSorted(String[] words, String order) {
+        int result = 0;
+        for(int i = 0; i<words.length - 1; i++){
+            String first = words[i];
+            String second = words[i + 1];
+            int count = 0;
+            int ab = Math.min(first.length(), second.length());
+            for(int j = 0; j<ab; j++){
+                char a = first.charAt(j);
+                char b = second.charAt(j);
+                int x = order.indexOf(a);
+                int y = order.indexOf(b);
+                if(x < y){
+                    result++;
+                    break;
+                }
+                else if(x == y){
+                    continue;
+                }
+                else{
+                    return false;
+                }
+            }
+            
+        }
+        return result == words.length - 1;
+    }
+}

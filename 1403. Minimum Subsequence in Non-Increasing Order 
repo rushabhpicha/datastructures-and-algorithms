@@ -1,0 +1,22 @@
+class Solution {
+    public List<Integer> minSubsequence(int[] nums) {
+        
+        PriorityQueue<Integer> queue = new PriorityQueue(Collections.reverseOrder());
+        List<Integer> list = new ArrayList();
+        int totalSum = 0;
+        for(int a : nums){
+            queue.add(a);
+            totalSum += a;
+        }
+
+        int sum = 0;
+        while(sum <= totalSum - sum && queue.size() > 0){
+           
+            int temp = queue.peek();
+            sum += queue.poll();
+            list.add(temp);
+        }
+        
+        return list;
+    }
+}

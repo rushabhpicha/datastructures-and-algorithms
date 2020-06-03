@@ -1,0 +1,22 @@
+class Solution {
+    public int numKLenSubstrNoRepeats(String S, int K) {
+        
+        int i = 0;
+        int j = K;
+        int result = 0;
+        while(j <= S.length()){
+            String sub = S.substring(i++, j++);
+            HashSet<Character> set = new HashSet();
+            for(int k = 0; k<sub.length(); k++){
+                char c = sub.charAt(k);
+                set.add(c);
+            }
+            if(set.size() == K){
+                result++;
+            }
+        }
+            
+        
+        return result;
+    }
+}

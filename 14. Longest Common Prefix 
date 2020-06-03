@@ -1,0 +1,36 @@
+class Solution {
+    public String longestCommonPrefix(String[] strs) {
+        String ans = "";
+        int counter = 0;
+        if(strs.length > 0 && strs[0].length() > 0 && strs[0] != null){
+            counter = strs[0].length();
+        }
+            
+        int i = 0;
+        HashSet<Character> set = new HashSet();
+        search:{
+        while(i < counter){
+            char c = 'a';
+            for(String s : strs){
+                try{
+                     set.add(s.charAt(i));
+                     c = s.charAt(i);
+                }
+                catch(Exception e){
+                    break search;
+                }
+            }
+            if(i == 0 && set.size() > 1) return "";
+            if(set.size() == 1){
+                ans = ans + c;
+                set.clear();
+            }
+            else{
+                set.clear();
+            }
+            i++;
+        }
+        }
+        return ans;
+    }
+}

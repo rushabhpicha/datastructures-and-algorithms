@@ -1,0 +1,18 @@
+class Solution {
+    public int maxNumberOfApples(int[] arr) {
+
+        PriorityQueue<Integer> queue = new PriorityQueue();
+        
+        for( int i : arr) queue.add(i);
+    
+        int sum = 0;
+        int count = 0;
+        while(!queue.isEmpty()&& queue.peek() + sum <= 5000){
+            sum+=queue.poll();
+            count++;
+        }
+        return count;
+        
+        
+    }
+}

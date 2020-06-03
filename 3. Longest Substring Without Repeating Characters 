@@ -1,0 +1,17 @@
+class Solution {
+    public int lengthOfLongestSubstring(String s) {
+        if(s.length() == 0 || s == null) return 0;
+        String sub = "";
+        int ans = 1;
+        for(int i = 0; i<s.length(); i++){
+            sub = s.charAt(i) + "";
+            int counter = i + 1;
+            while(counter < s.length() && sub.indexOf(s.charAt(counter)) < 0){
+                sub = s.substring(i, counter + 1);
+                counter++;
+                if(sub.length() > ans) ans = sub.length();
+            }
+        }
+    return ans;
+    }
+}

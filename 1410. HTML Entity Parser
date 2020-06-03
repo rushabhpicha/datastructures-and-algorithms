@@ -1,0 +1,22 @@
+class Solution {
+    public String entityParser(String text) {
+        String result = "";
+        HashMap<String, Character> map = new HashMap();
+        map.put("&quot;", '\"');
+        map.put("&apos;", '\'');
+        map.put("&amp;", '&');
+        map.put("&gt;", '>');
+        map.put("&lt;", '<');
+        map.put("&frasl;", '/');
+                
+        for(String s : map.keySet()){
+            if(text.contains(s)){
+                // if(s == "&quote" || s == "&apos"){
+                //     text = text.replace(s,)
+                // }
+                text = text.replace(s, map.get(s)+"");
+            }
+        }
+        return text;
+    }
+}

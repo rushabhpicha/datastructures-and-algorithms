@@ -1,0 +1,26 @@
+class Solution {
+    public boolean validMountainArray(int[] A) {
+        int n = A.length;
+        int incre = 0;
+        int decre = 0;
+        boolean flag = true;
+        for(int i = 1; i<n; i++){
+            if(flag && A[i] > A[i - 1]){
+                incre++;
+            }
+            else{
+                flag = false;
+            }
+            
+            if(!flag && A[i] < A[i - 1]) {
+                decre++;
+            }
+            
+        }
+        
+        if(incre > 0 && decre >0 && incre + decre == n - 1) return true;
+        else{
+            return false;
+        }
+    }
+}
