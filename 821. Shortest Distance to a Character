@@ -1,0 +1,22 @@
+class Solution {
+    public int[] shortestToChar(String S, char C) {
+        int[] ans = new int[S.length()];
+        if(S.length() == 0 || S == null) return ans;
+        HashMap<Integer, Character> map = new HashMap();
+        for(int i = 0; i<S.length(); i++) 
+            if(S.charAt(i) == C) map.put(i, C);
+        
+        for(int i = 0; i < S.length() ; i++){
+            if(S.charAt(i) == C){
+                ans[i] = 0;
+                continue;
+            } 
+            int dif = Integer.MAX_VALUE;
+            for(int key : map.keySet()){
+                dif = Math.min(dif, Math.abs(i - key));
+            }
+            ans[i] = dif;
+        }
+        return ans;
+    }
+}
