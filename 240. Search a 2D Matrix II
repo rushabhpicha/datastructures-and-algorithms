@@ -1,0 +1,15 @@
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix.length == 0 || matrix == null || matrix[0].length == 0) return false;
+        int j = matrix[0].length;
+        for(int i = 0; i<matrix.length; i++){
+            if(matrix[i][0] <= target && matrix[i][j - 1] >=target){
+                for(int k = 0; k < matrix[0].length; k++){
+                    if(matrix[i][k] == target) return true;
+                }
+            }
+            
+        }
+        return false;
+    }
+}
