@@ -1,0 +1,37 @@
+// The main idea of this algorithm is to het the count of uppercase letter, lowercase letter and the boolean first which tells if the first letter is capital or a lowercase letter
+
+class Solution {
+    public boolean detectCapitalUse(String word) {
+        if(word.length() == 0 || word == null) return false;
+        int capital = 0;
+        int small = 0;
+        boolean first = false;
+        int as = 0;
+        for(int i = 0; i<word.length(); i++){
+            // getting the ascii value of the character and the chaekcing if it is an upper case or a lower case
+            
+            as = (int) word.charAt(i);
+            if(i == 0 && as >= 65 && as <= 90){
+                first = true;
+                capital++;
+                continue;
+            }
+            
+            if(as >= 65 && as <= 90){
+                capital++;
+            }
+            else{
+                small++;
+            }
+        }
+       
+        // Based on our three parameter we check if the word is a capital or not
+        if(capital == word.length() || small == word.length()){
+            return true;
+        }
+        else if(first == true && small == word.length() - 1){
+            return true;
+        }
+        return false;
+    }
+}
