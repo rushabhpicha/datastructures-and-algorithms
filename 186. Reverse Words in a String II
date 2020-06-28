@@ -1,0 +1,29 @@
+class Solution {
+    public void reverseWords(char[] s) {
+        // first reversing the entire string
+        reverseString(0, s.length - 1, s);
+        int first = 0;
+       
+        // reversing the words if we encounter an empty character.
+        for(int i = 0; i<s.length; i++){
+            if(s[i] == ' '){
+                reverseString(first, i - 1, s);
+                first = i + 1;
+            }
+            if(i == s.length - 1){
+                reverseString(first, i, s);
+            }
+        }
+    }
+    
+    //Creating the method reverse to reverse the string passing the paramenters first index, last index and the array
+    public void reverseString(int k, int j, char[] s){
+        while(k < j){
+            char temp = s[k];
+            s[k] = s[j];
+            s[j] = temp;
+            k++;
+            j--;
+        }
+    }
+}
