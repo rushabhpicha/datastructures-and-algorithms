@@ -1,0 +1,25 @@
+class Solution {
+    public int shortestDistance(String[] words, String word1, String word2) {
+        int last1 = -1;
+        int last2 = -1;
+        int i = 0;
+        int ans = Integer.MAX_VALUE;
+        while(i < words.length){
+            if(words[i].equals(word1)){
+                last1 = i;
+                if(last2 != -1){
+                    ans = Math.min(ans, Math.abs(last2 - i));
+                }
+            }
+            
+            else if(words[i].equals(word2)){
+                last2 = i;
+                if(last1 != -1){
+                    ans = Math.min(ans, Math.abs(last1 - i));
+                }
+            }
+            i++;
+        }
+        return ans;
+    }
+}
