@@ -1,0 +1,19 @@
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+        // Creating the hashtable of ListNodes
+        Set<ListNode> visited = new HashSet<ListNode>();
+
+        ListNode node = head;
+        while (node != null) {
+        // Checking if the set alread contains the node. If yes, we have found the node where the cycle is repeated.
+            if (visited.contains(node)) {
+                return node;
+            }
+            visited.add(node);
+            // Make the current node as the next one.
+            node = node.next;
+        }
+        // Return null otherwise.
+        return null;
+    }
+}
