@@ -1,0 +1,34 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class FindElements {
+        // Creating a BitSet class to store the boolean variable as true for a particular element
+        private BitSet sets = new BitSet();
+
+        public FindElements(TreeNode root) {
+            dsf(root, 0);
+        }
+
+        public boolean find(int target) {
+            return sets.get(target);
+        }
+
+        private void dsf(TreeNode root, int val) {
+            if (root == null) return;
+            sets.set(val);
+            dsf(root.left, 2 * val + 1);
+            dsf(root.right, 2 * val + 2);
+        }
+    }
