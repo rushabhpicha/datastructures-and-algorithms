@@ -1,0 +1,52 @@
+
+class Solution {
+    TreeNode node = new TreeNode();
+    List<int[]> list = new ArrayList();
+
+    public int[][] indexPairs(String text, String[] words) {
+        for(String word : words){
+            insert(word);
+        }
+        for(int i = 0; i<text.length(); i++){
+            char c = text.charAt(i);
+            TreeNode curr = node;
+            int j = i;
+            while(curr.children[c - 'a'] != null){
+                curr = curr.children[c - 'a'];
+                if(curr.word != null) {
+                    list.add(new int[]{i,j});
+                }
+                if(j == text.length() - 1) break;
+                else{
+                    j++;
+                    c = text.charAt(j);
+                }
+            }
+        }
+        
+        int[][] ans = new int[list.size()][2];
+        int i= 0;
+        for(int[] array : list){
+            ans[i] = array;
+            i++;
+        }
+        return ans;
+    }
+    
+   
+    void insert(String s){
+        TreeNode curr = node;
+        for(char c : s.toCharArray()){
+            if(curr.children[c - 'a'] == null){
+                curr.children[c - 'a'] = new TreeNode();
+            }
+            curr = curr.children[c - 'a'];
+        }
+        curr.word = s;
+    }
+}
+    
+class TreeNode{
+        TreeNode[] children = new TreeNode[26];
+        String word;
+}
