@@ -1,0 +1,26 @@
+class Solution {
+    public int[] diStringMatch(String S) {
+        
+        int[] res = new int[S.length() + 1];
+        if(S.length() == 0 || S == null) return res;
+        int i = 0;
+        int j = S.length();
+        int index = 0;
+        
+        for(char c : S.toCharArray()){
+            if(c == 'I'){
+                res[index] = i;
+                index++;
+                i++;
+            }
+            else{
+                res[index] = j;
+                j--;
+                index++;
+            }
+        }
+        if(S.charAt(S.length() - 1) == 'I') res[index] = i;
+        else res[index] = j;
+        return res;
+    }
+}
