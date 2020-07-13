@@ -1,0 +1,22 @@
+class Solution {
+    boolean flag = false;
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix.length == 0 || matrix[0].length == 0 || matrix == null) return false;
+        for(int i = 0; i<matrix.length; i++){
+            if(matrix[i][0] <= target && matrix[i][matrix[0].length - 1] >= target)            {
+                search(matrix[i], target);
+                break;
+            }
+        }
+        return flag;
+        
+    }
+    void search(int[] array, int target){
+        for(int i = 0; i<array.length; i++){
+            if(array[i] == target){
+                flag = true;
+                break;
+            }
+        }
+    }
+}
