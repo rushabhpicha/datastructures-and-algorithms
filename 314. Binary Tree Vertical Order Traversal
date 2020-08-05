@@ -1,0 +1,58 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    //Creating a Node class which has properties TreeNode and it's horizontol distance.
+    public class Node{
+        TreeNode root;
+        int minHd;
+        
+        Node(TreeNode root, int minHd){
+            this.root = root;
+            this.minHd = minHd;
+        }
+    }
+    public List<List<Integer>> verticalOrder(TreeNode root) { 
+        // Doing a simple BFS
+        List<List<Integer>> list = new ArrayList();
+        if(root == null) return list;
+        Queue<Node> queue = new LinkedList();
+        queue.offer(new Node(root, 0));
+        
+        HashMap<Integer, List<Integer>> map = new HashMap();
+        int min = Integer.MAX_VALUE, max = Integer.MIN_VALUE;
+        while(!queue.isEmpty()){
+            Node curr = queue.poll();
+            min = Math.min(min, curr.minHd);
+            max = Math.max(max, curr.minHd);
+            
+            map.putIfAbsent(curr.minHd, new ArrayList<Integer>());
+            if(map.containsKey(curr.minHd)){
+                map.get(curr.minHd).add(curr.root.val);
+            }
+            if(curr.root.left != null){
+                queue.add(new Node(curr.root.left, curr.minHd - 1));
+            }
+            
+            if(curr.root.right != null){
+                queue.add(new Node(curr.root.right, curr.minHd + 1));
+            }
+        }
+        for(int i = min; i <= max; i++){
+            list.add(map.get(i));
+        }
+        return list;
+    }
+}
