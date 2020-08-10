@@ -1,0 +1,98 @@
+class Solution {
+    public int[] findOrder(int numCourses, int[][] prerequisites) {
+        
+        /*Kahn's Algorithm
+        1. Create the adjacency list. Create an indegree array to store the indegree of              all the vertices given.
+        2. Add the vertex with indegree == 0 into our queue ans then start the BFS until              the Queue becomes empty.
+        3. During BFS, check for the vertex connected to our cur vertex and reduce it's 
+           indegree. At any point indegree becomes zero add it to our queue. Increment the            count when a vertex is done exploring.
+        4. If the count == number of vertices that means the given graph is a DAG.                    Otherwise, the graph is not a DAG.
+        */
+        int count = 0;
+        int[] indegree = new int[numCourses];
+        List<List<Integer>> list = new ArrayList();
+        for(int i = 0; i<numCourses; i++){
+            list.add(new ArrayList());
+        }
+        
+        for(int[] pre : prerequisites){
+            list.get(pre[1]).add(pre[0]);
+        }
+        for(List<Integer> l : list){
+            for(int i : l){
+                indegree[i]++;
+            }
+        }        
+        
+        Queue<Integer> queue = new LinkedList();
+        for(int i = 0; i<indegree.length; i++) 
+            if(indegree[i] == 0) queue.add(i);
+        int[] res = new int[numCourses];
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int i = 0; i<size; i++){
+                int cur = queue.poll();
+                List<Integer> l = list.get(cur);
+                for(int j : l){
+                    indegree[j]--;
+                    if(indegree[j] == 0)
+                        queue.add(j);
+                }
+                res[count] = cur;
+                count++;
+            }
+        }
+        if(count == numCourses){
+            return res;
+        }
+        else{
+            return new int[0];
+        }
+        
+        
+        // DFS Style Topological order finding
+/*        List<List<Integer>> adjList = new ArrayList();
+        int[] res = new int[numCourses];
+        for(int i = 0; i<numCourses; i++){
+            adjList.add(new ArrayList());
+        }
+        
+        for(int[] pre : prerequisites){
+            adjList.get(pre[1]).add(pre[0]);
+        }
+        System.out.println(adjList);
+        
+        int[] visited = new int[numCourses];
+        
+        Stack<Integer> stack = new Stack();
+        
+        for(int i = 0; i<numCourses; i++){
+            if(visited[i] == 0){
+                if(!dfs(i, visited, adjList, stack))
+                    return new int[0];
+            }
+        }
+       
+        int i = 0;
+        
+        while(i<res.length && !stack.isEmpty()){
+                res[i++] = stack.pop();
+            }
+        
+        return res;*/
+    }
+    
+    boolean dfs(int i, int[] visited, List<List<Integer>> list, Stack<Integer> stack){
+        if(visited[i] == 1) return false;
+        if(visited[i] == 2) return true;
+        visited[i] = 1;      
+        List<Integer> connections = list.get(i);
+        for(int edge : connections){
+            if(visited[edge] == 1) return false;
+                 if(!dfs(edge, visited, list, stack)) return false;
+        }
+        visited[i] = 2;
+        stack.push(i);
+        return true;
+    }
+}
