@@ -1,0 +1,25 @@
+class Solution {
+    public List<List<Integer>> allPathsSourceTarget(int[][] graph) {
+        List<List<Integer>> list = new ArrayList();
+        List<Integer> l = new ArrayList();
+        l.add(0);
+        dfs(0, graph, list, l);
+        return list;
+    }
+    //Dfs to add all the paths from start to end.
+    void dfs(int i, int[][] graph, List<List<Integer>> list, List<Integer> l){
+    
+    // If the value of i equals the last node of our graph we add it to our final list and return.
+        if(i == graph.length - 1){
+            list.add(new ArrayList(l));
+            return;
+        }
+        int[] edge = graph[i];
+        for(int j : edge){
+            l.add(j);
+            dfs(j, graph, list, l);   
+            l.remove(l.size() - 1);
+        }
+        return;
+    }
+}
