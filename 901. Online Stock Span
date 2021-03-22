@@ -1,0 +1,22 @@
+class StockSpanner {
+    Stack<Pair<Integer, Integer>> stack;
+    public StockSpanner() {
+        stack = new Stack();
+    }
+    
+    public int next(int price) {
+        int count = 1;
+        while(stack.size() > 0 && stack.peek().getKey() <= price){
+            count += stack.peek().getValue();
+            stack.pop();
+        }
+        stack.push(new Pair(price, count));
+        return count;
+    }
+}
+
+/**
+ * Your StockSpanner object will be instantiated and called as such:
+ * StockSpanner obj = new StockSpanner();
+ * int param_1 = obj.next(price);
+ */
