@@ -1,0 +1,54 @@
+class Solution {
+    public int trap(int[] height) {
+        if(height == null || height.length == 0) return 0;
+        if(height.length == 1) return 0;
+//         List<Integer> leftMax = new ArrayList<>();
+//         List<Integer> rightMax = new ArrayList<>();
+        
+//         int lMax = height[0];
+//         leftMax.add(height[0]);
+//         for(int i=1; i<height.length; i++){
+//             lMax = Math.max(lMax, height[i]);
+//             leftMax.add(lMax);
+//         }
+        
+//         rightMax.add(height[height.length - 1]);
+//         int rMax = height[height.length - 1];
+//         for(int i=height.length - 2; i>=0; i--){
+//             rMax = Math.max(rMax, height[i]);
+//             rightMax.add(rMax);
+//         }
+        
+//         Collections.reverse(rightMax);
+//         int ans = 0;
+//         for(int i=0; i<leftMax.size(); i++){
+//             ans += (Math.min(leftMax.get(i), rightMax.get(i)) - height[i]); 
+//         }
+                    
+//         return ans;
+        int left = 0, right = height.length - 1, leftMax = 0, rightMax = 0, ans = 0;
+        while(left <= right){
+            if(height[left] < height[right]){
+                if(height[left] >= leftMax){
+                    leftMax = Math.max(leftMax, height[left]);
+                    
+                }
+                else{
+                    ans += leftMax - height[left]; 
+                }
+                left++;
+            }
+            else{
+                if(height[right] >= rightMax){
+                    rightMax = Math.max(rightMax, height[right]);
+                    
+                }
+                else{
+                    ans += rightMax - height[right]; 
+                }
+                right--;
+            }
+        }
+        return ans;
+    }
+}
