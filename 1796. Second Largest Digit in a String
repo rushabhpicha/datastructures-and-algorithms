@@ -1,0 +1,34 @@
+class Solution {
+    public int secondHighest(String s) {
+        // int max = -1;
+        // for(char c : s.toCharArray()){
+        //     if(Character.isDigit(c)){
+        //         max = Math.max(max, Integer.parseInt(String.valueOf(c)));
+        //     }
+        // }
+        // int secondMax = -1;
+        // for(char c : s.toCharArray()){
+        //     if(Character.isDigit(c)){
+        //         int curDigit = Integer.parseInt(String.valueOf(c));
+        //         if(curDigit != max){
+        //             secondMax = Math.max(secondMax, curDigit);
+        //         }
+        //     }
+        // }
+        // if(secondMax == max) return max;
+        // else return secondMax;
+        int first = -1, second = -1;
+        for(char c : s.toCharArray()){
+            if(!Character.isDigit(c)) continue;
+            int i = Integer.parseInt(String.valueOf(c));
+            if(i > first){
+                second = first;
+                first = i;
+            }
+            else if(i > second && i < first){
+                second = i;
+            }
+        }
+        return second;
+    }
+}
