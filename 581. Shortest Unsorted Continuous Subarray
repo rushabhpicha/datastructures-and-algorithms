@@ -1,0 +1,30 @@
+class Solution {
+    public int findUnsortedSubarray(int[] nums) {
+        if(nums == null || nums.length == 0) return -1;
+        int low = 0, high = nums.length - 1;
+        
+        while(low < nums.length - 1 && nums[low] <= nums[low + 1]){
+            low++;
+        }
+        if(low == nums.length - 1) return 0;
+        while(high - 1 >= 0 && nums[high] >= nums[high - 1]){
+            high--;
+        }
+        int minInSubarray = 100001;
+        int maxInSubarray = Integer.MIN_VALUE;
+        //System.out.println(low +"  "+high);
+        for(int i=low; i<=high; i++){
+            minInSubarray = Math.min(minInSubarray, nums[i]);
+            maxInSubarray = Math.max(maxInSubarray, nums[i]);
+        }
+        
+        while(low - 1 >= 0 && nums[low - 1] > minInSubarray){
+            low--;
+        }
+        while(high + 1 < nums.length && nums[high + 1] < maxInSubarray){
+            high++;
+        }
+        //System.out.println(low +"  "+high);
+        return high - low + 1;
+    }
+}
