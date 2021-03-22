@@ -1,0 +1,44 @@
+class MyHashSet {
+
+    /** Initialize your data structure here. */
+    List<List<Integer>> list;
+    int bucketSize = 769;
+
+    public MyHashSet() {
+        list = new ArrayList<>();
+        for(int i=0; i<769; i++){
+            list.add(new ArrayList<Integer>());
+        }
+    }
+    
+    public void add(int key) {
+        int mod = key % 769;
+        if(list.get(mod) == null) list.add(mod, new ArrayList<Integer>());
+        List<Integer> curList = list.get(mod);
+        if(!curList.contains(key)) curList.add(key);
+    }
+    
+    public void remove(int key) {
+        int mod = key % 769;
+        List<Integer> curList = list.get(mod);
+        if(curList.contains(key)) curList.remove(Integer.valueOf(key));
+    }
+    
+    /** Returns true if this set contains the specified element */
+    public boolean contains(int key) {
+        int mod = key % 769;
+        List<Integer> curList = list.get(mod);
+        if(curList!= null){
+            return curList.contains(key);
+        }
+        return false;
+    }
+}
+
+/**
+ * Your MyHashSet object will be instantiated and called as such:
+ * MyHashSet obj = new MyHashSet();
+ * obj.add(key);
+ * obj.remove(key);
+ * boolean param_3 = obj.contains(key);
+ */
