@@ -1,0 +1,31 @@
+class Solution {
+    public int minAddToMakeValid(String S) {
+        int invalidClose = 0, open = 0;
+        for(char c : S.toCharArray()){
+            if(c == ')'){
+                if(open == 0){
+                    invalidClose++;
+                }
+                else open--;
+            }
+            else if(c == '('){
+                open++;
+            }
+        }
+        //System.out.println(invalidClose);
+        int invalidOpen = 0, close = 0;
+        for(int i=S.length() - 1; i>=0; i--){
+            char c = S.charAt(i);
+            if(c == '('){
+                if(close == 0){
+                    invalidOpen++;
+                }
+                else close--;
+            }
+            else{
+                close++;
+            }
+        }
+        return invalidOpen + invalidClose;
+    }
+}
