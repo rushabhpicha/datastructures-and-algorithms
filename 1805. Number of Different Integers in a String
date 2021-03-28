@@ -1,0 +1,33 @@
+class Solution {
+    public int numDifferentIntegers(String word) {
+        StringBuilder sb = new StringBuilder(word);
+        for(int i=0; i<sb.length(); i++){
+            char c = sb.charAt(i);
+            if(!Character.isDigit(c)){
+                sb.replace(i, i+1, " ");
+            }
+        }
+        //System.out.println(sb.toString());
+        HashSet<String> set = new HashSet<>();
+        StringBuilder temp = new StringBuilder();
+        
+        int i=0, cur=0;
+        
+        while(i < sb.length()){
+            while(i < sb.length() && sb.charAt(i) == ' ') i++;
+            while(i < sb.length() && sb.charAt(i) != ' '){
+                temp.append(sb.charAt(i++));
+            }
+            int j=0;
+            while(j < temp.length() && temp.charAt(j) == '0'){
+                j++;
+            }
+            
+            if(temp.length() > 0){
+                set.add(temp.toString().substring(j));
+            }
+            temp.setLength(0);
+        }
+        return set.size();
+    }
+}
