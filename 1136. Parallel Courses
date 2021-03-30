@@ -1,0 +1,42 @@
+class Solution {
+    public int minimumSemesters(int n, int[][] relations) {
+        if(relations.length == 0 || relations == null) return 0;
+        List<List<Integer>> list = new ArrayList<>();
+        for(int i=0; i<=n; i++){
+            list.add(new ArrayList<Integer>());
+        }
+        for(int[] relation : relations){
+            list.get(relation[0]).add(relation[1]);
+        }
+        int[] indegree = new int[n+1];
+        
+        for(int i=1; i<list.size(); i++){
+            List<Integer> temp = list.get(i);
+            if(temp == null) continue;
+            for(int k:temp){
+                indegree[k]++;
+            }
+        }
+        Queue<Integer> queue = new LinkedList<>();
+        for(int i=1; i<indegree.length; i++){
+            if(indegree[i] == 0) queue.add(i);
+        }
+        int semesters = 0, count=0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int k=0; k<size; k++){
+                int polled = queue.poll();
+                count++;
+                if(count == n) return semesters + 1;
+                for(int key : list.get(polled)){
+                    indegree[key]--;
+                    if(indegree[key] == 0){
+                        queue.add(key);
+                    }
+                }
+            }
+            semesters++;
+        }
+        return count != n ? -1 : semesters;
+    }
+}
