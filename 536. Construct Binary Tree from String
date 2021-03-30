@@ -1,0 +1,53 @@
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode() {}
+ *     TreeNode(int val) { this.val = val; }
+ *     TreeNode(int val, TreeNode left, TreeNode right) {
+ *         this.val = val;
+ *         this.left = left;
+ *         this.right = right;
+ *     }
+ * }
+ */
+class Solution {
+    int index = 0;
+    public TreeNode str2tree(String s) {
+        if(s == null || s.length() == 0) return null;
+        return getTree(s);
+    }
+    
+    TreeNode getTree(String s){
+        if(index >= s.length()) return null;
+        int sign = 1;
+        if(s.charAt(index) == '-'){
+            sign = -1;
+            index++;
+        } 
+        StringBuilder temp = new StringBuilder();
+        while(index < s.length() && Character.isDigit(s.charAt(index))){
+            temp.append(s.charAt(index));
+            index++;
+        }
+        int value = 0;
+        value = sign * Integer.parseInt(temp.toString());
+        TreeNode node = new TreeNode(value);
+            if(index < s.length() && s.charAt(index) == '('){
+                index++;
+                node.left = getTree(s);
+                index++;
+            }
+        
+        if(index < s.length() && s.charAt(index) == '('){
+                index++;
+                node.right = getTree(s);
+                index++;
+            }
+       
+        return node;
+        
+    }
+}
