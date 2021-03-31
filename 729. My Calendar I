@@ -1,0 +1,29 @@
+class MyCalendar {
+    List<List<Integer>> list;
+    public MyCalendar() {
+        list = new ArrayList<>();
+    }
+    
+    public boolean book(int start, int end) {
+        if(list.size() == 0) {
+            list.add(Arrays.asList(start, end));
+            return true;
+        }
+        else{
+            for(List<Integer> l : list){
+                int curStart = l.get(0), curEnd = l.get(1);
+                if(start < curEnd && curStart < end){
+                    return false;
+                }
+            }
+            list.add(Arrays.asList(start, end));
+        }
+        return true;
+    }
+}
+
+/**
+ * Your MyCalendar object will be instantiated and called as such:
+ * MyCalendar obj = new MyCalendar();
+ * boolean param_1 = obj.book(start,end);
+ */
