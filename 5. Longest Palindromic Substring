@@ -1,0 +1,30 @@
+class Solution {
+    public String longestPalindrome(String s) {
+        if(s == null || s.length() == 0) return "";
+        if(s.length() == 1) return s;
+        int longest = 0;
+        String res = "";
+        for(int i=0; i<s.length(); i++){
+            int[] singleExpansion = expandFromCenter(s, i, i);
+            if(singleExpansion[1] - singleExpansion[0] + 1 > longest){
+                longest = singleExpansion[1] - singleExpansion[0] + 1;
+                res = s.substring(singleExpansion[0], singleExpansion[1]+1);
+            }
+            int[] doubleExpansion;
+                doubleExpansion = expandFromCenter(s, i, i+1);
+                if(doubleExpansion[1] - doubleExpansion[0] + 1 > longest){
+                    longest = doubleExpansion[1] - doubleExpansion[0] + 1;
+                    res = s.substring(doubleExpansion[0], doubleExpansion[1]+1);
+                }
+        }
+        return res;
+    }
+    
+    int[] expandFromCenter(String s, int i, int j){
+        while(i>=0 && j<s.length() && s.charAt(i) == s.charAt(j)){
+            i--;
+            j++;
+        }
+        return new int[]{i+1, j-1};
+    }
+}
