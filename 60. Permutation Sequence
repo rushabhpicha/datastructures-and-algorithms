@@ -1,0 +1,33 @@
+class Solution {
+    
+    public String getPermutation(int n, int k) {
+        List<String> cur = new ArrayList<>();
+        int[] nums = new int[n];
+        for(int i=0; i<n; i++){
+            nums[i] = i+1;
+        }
+        StringBuilder sb = new StringBuilder();
+        
+        getKthPermutation(nums, k, 0, sb, cur, new boolean[n+1]);
+        return cur.get(k-1);
+    }
+    
+    void getKthPermutation(int[] nums, int k, int index, StringBuilder sb, List<String> cur, boolean[] used){
+        if(sb.length() == nums.length){
+            cur.add(sb.toString());
+            return;
+        }
+        
+        for(int i=0; i<nums.length; i++){
+            if(cur.size() == k) break;
+            if(used[i]) continue;
+            used[i] = true;
+            sb.append(String.valueOf(nums[i]));
+            //System.out.println(sb.toString());
+            getKthPermutation(nums, k, index, sb, cur, used);
+            used[i] = true;
+            sb.setLength(sb.length() - 1);
+        }
+    }
+    
+}
