@@ -1,0 +1,23 @@
+class Solution {
+    public List<List<Integer>> combine(int n, int k) {
+        List<List<Integer>> list = new ArrayList<>();
+        getCombinations(list, n, k, new ArrayList<Integer>(), 1);
+        return list;
+    }
+    
+    void getCombinations(List<List<Integer>> list, int n, int k, List<Integer> cur, int index){
+        if(cur.size() == k){
+            list.add(new ArrayList<>(cur));
+            return;
+        }
+        if(index > n){
+            return;
+        }
+        
+        for(int i=index; i<=n; i++){
+            cur.add(i);
+            getCombinations(list, n, k, cur, i+1);
+            cur.remove(cur.size() - 1);
+        }
+    }
+}
