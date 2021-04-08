@@ -1,0 +1,28 @@
+class Solution {
+    public List<List<Integer>> combinationSum2(int[] candidates, int target) {
+        List<List<Integer>> list = new ArrayList<>();
+        if(candidates == null || candidates.length == 0) return list;
+        Arrays.sort(candidates);
+        getUniqueCombinations(list, candidates, target, 0, 0, new ArrayList<Integer>(), new boolean[candidates.length]);
+        return list;
+    }
+    
+    void getUniqueCombinations(List<List<Integer>> list, int[] candidates, int target, int sum, int index, List<Integer> cur, boolean[] used){
+        if(sum == target){
+            list.add(new ArrayList<>(cur));
+        }
+        if(sum > target) return;
+        
+        
+        for(int i=index; i<candidates.length; i++){
+            if(used[i] || i>0 && candidates[i] == candidates[i-1] && !used[i-1]) continue;
+            used[i] = true;
+            sum += candidates[i];
+            cur.add(candidates[i]);
+            getUniqueCombinations(list, candidates, target, sum, i+1, cur, used);
+            sum -= candidates[i];
+            cur.remove(cur.size() - 1);
+            used[i] = false;
+        }
+    }
+}
