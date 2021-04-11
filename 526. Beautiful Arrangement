@@ -1,0 +1,21 @@
+class Solution {
+    public int countArrangement(int n) {
+        return getCountOfArrangement(n, 1, new boolean[n+1]);
+    }
+    
+    int getCountOfArrangement(int n, int index, boolean[] visited){
+        if(index == n+1){
+            return 1;    
+        }
+        int res = 0;
+        for(int i=1; i <= n; i++){
+            if(!visited[i] && (i%index == 0 || index%i == 0)){
+                visited[i] = true;
+                res += getCountOfArrangement(n, index+1, visited);
+                visited[i] = false;
+            }
+        }
+        
+        return res;
+    }
+}
