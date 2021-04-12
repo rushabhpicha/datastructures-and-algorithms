@@ -1,0 +1,31 @@
+class Solution {
+    public List<String> letterCasePermutation(String S) {
+        List<String> list = new ArrayList<>();
+        if(S == null || S.length() == 0) return list;
+        getPermutations(S, new StringBuilder(), list, 0);
+        return list;
+    }
+    
+    void getPermutations(String S, StringBuilder sb, List<String> list, int index){
+        if(sb.length() == S.length()){
+            list.add(sb.toString());
+            return;
+        }
+        
+        for(int i=index; i<S.length(); i++){
+            if(Character.isDigit(S.charAt(i))){
+                sb.append(S.charAt(i));
+                getPermutations(S, sb, list, i+1);
+                sb.setLength(sb.length() - 1);
+            }
+            else{
+                sb.append(Character.toLowerCase(S.charAt(i)));
+                getPermutations(S, sb, list, i+1);
+                sb.setLength(sb.length() - 1);
+                sb.append(Character.toUpperCase(S.charAt(i)));
+                getPermutations(S, sb, list, i+1);
+                sb.setLength(sb.length() - 1);
+            }
+        }
+    }
+}
