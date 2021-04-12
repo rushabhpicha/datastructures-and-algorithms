@@ -1,0 +1,20 @@
+class Solution {
+    public int numTrees(int n) {
+        HashMap<Integer, Integer> map = new HashMap<>();
+        return getUniqueBSTs(n, map);
+    }
+    
+    int getUniqueBSTs(int n, HashMap<Integer, Integer> map){
+        if(n == 0) return 1;
+        if(n == 1) return 1;
+        if(n == 2) return 2;
+        if(map.containsKey(n)) return map.get(n);
+        int count = 0;
+        for(int i=1; i<=n; i++){
+            int leftCount = i-1, rightCount = n-i;
+            count = count + (getUniqueBSTs(leftCount, map) * getUniqueBSTs(rightCount, map));
+        }
+        map.put(n, count);
+        return count;
+    }
+}
