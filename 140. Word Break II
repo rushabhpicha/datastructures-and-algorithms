@@ -1,0 +1,37 @@
+class Solution {
+    public List<String> wordBreak(String s, List<String> wordDict) {
+        List<String> res = new ArrayList<>();
+        if(wordDict.size() == 0 || wordDict == null) return res;
+        HashSet<String> set = new HashSet<>();
+        for(String cur : wordDict){
+            set.add(cur);
+        }
+        
+        getWord(s, set, new ArrayList<>(), res);
+        return res;
+    }
+    
+    void getWord(String s, HashSet<String> set, List<String> cur, List<String> res){
+        if(s.equals("")){
+            StringBuilder demo = new StringBuilder();
+            for(String temp : cur){
+                demo.append(temp);
+                demo.append(" ");
+            }
+            demo.setLength(demo.length() - 1);
+            res.add(demo.toString());
+            return;
+        }
+        
+        for(int i=1; i<=s.length(); i++){
+            String sub = s.substring(0, i);
+            if(set.contains(sub)){
+                cur.add(sub);
+                String remaining = s.substring(i);
+                getWord(remaining, set, cur, res);
+                cur.remove(cur.size() - 1);
+            }
+        }
+        return;
+    }
+}
