@@ -1,0 +1,40 @@
+class Solution {
+    public int ladderLength(String beginWord, String endWord, List<String> wordList) {
+        
+        if(wordList == null || wordList.size() == 0) return 0;
+        Queue<String> queue = new LinkedList<>();
+        if(!wordList.contains(endWord)) return 0;
+        HashSet<String> set = new HashSet<>();
+        for(String cur : wordList) set.add(cur);
+        set.remove(beginWord);
+        queue.add(beginWord);
+        int ans = 0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int k=0; k<size; k++){
+                String polled = queue.poll();
+                if(polled.equals(endWord)) return ans + 1;
+                for(String cur : wordList){
+                    if(validCouple(cur, polled) && set.contains(cur)){
+                        queue.add(cur);
+                        set.remove(cur);
+                    }
+                }
+            }
+            ans++;
+        }
+        return queue.isEmpty() ? 0 : ans;
+        
+    }
+    
+    boolean validCouple(String a, String b){
+        int count = 0;
+        if(a.length() != b.length()) return false;
+        for(int i=0; i<a.length(); i++){
+            if(a.charAt(i) != b.charAt(i)){
+                count++;
+            }
+        }
+        return count == 1;
+    }
+}
