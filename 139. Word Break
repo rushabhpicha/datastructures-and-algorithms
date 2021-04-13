@@ -1,0 +1,29 @@
+class Solution {
+    public boolean wordBreak(String s, List<String> wordDict) {
+        if(wordDict == null || wordDict.size() == 0) return false;
+        HashSet<String> set = new HashSet<>();
+        HashMap<String, Boolean> map = new HashMap<>();
+        for(String cur : wordDict) 
+            set.add(cur);
+        
+        return checkWordExist(s, set, 0, map);
+    }
+    
+    boolean checkWordExist(String s, HashSet<String> set, int index, HashMap<String, Boolean> map){
+        if(s.equals("")) return true;
+        if(map.containsKey(s)) return map.get(s);
+        for(int i=1; i<=s.length(); i++){
+            String sub = s.substring(0, i), remaining = s.substring(i);
+            //System.out.println(sub);
+            if(set.contains(sub)){
+                //System.out.println(sub);
+                if(checkWordExist(remaining, set, i, map)){
+                    map.put(sub, true);
+                    return true;
+                }
+            }
+        }
+        map.put(s, false);
+        return false;
+    }
+}
