@@ -1,0 +1,31 @@
+class Solution {
+    int max = 0, curMax = 0;
+    int[] rows = {1,0,0,-1};
+    int[] cols = {0,1,-1,0};
+    public int longestIncreasingPath(int[][] matrix) {
+        int[][] memo = new int[matrix.length][matrix[0].length];
+        
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                max = Math.max(max, getIncreasingPath(matrix, i, j, matrix[i][j], memo));
+            }
+        }
+        return max;
+    }
+    
+    int getIncreasingPath(int[][] matrix, int i, int j, int min, int[][] memo){
+        
+        if(memo[i][j] != 0) return memo[i][j];
+        
+        int curMax = 0;
+        for(int k=0; k<rows.length; k++){
+            int newRow = rows[k] + i;
+            int newCol = cols[k] + j;
+            if(newRow < 0 || newCol < 0 || newRow >= matrix.length || newCol >= matrix[0].length || matrix[newRow][newCol] <= min || matrix[newRow][newCol] == -1) continue;
+            curMax = Math.max(curMax, getIncreasingPath(matrix, newRow, newCol, matrix[newRow][newCol], memo));
+        }
+        
+        memo[i][j] = 1 + curMax;
+        return memo[i][j];
+    }
+}
