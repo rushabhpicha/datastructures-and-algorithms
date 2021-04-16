@@ -1,0 +1,27 @@
+class Solution {
+    int[] dsuf;
+    public int countComponents(int n, int[][] edges) {
+        dsuf = new int[n];
+        Arrays.fill(dsuf, -1);
+           
+        for(int[] edge : edges){
+            int parentA = findParent(edge[0]);
+            int parentB = findParent(edge[1]);
+            if(parentA == parentB) continue;
+            else {
+                dsuf[parentA] = parentB;
+            }
+        }
+        int ans = 0;
+        for(int i : dsuf) {
+            if(i == -1) ans++;
+        }
+        return ans;
+    }
+    
+    int findParent(int a){
+        if(dsuf[a] == -1) return a;
+        
+        return dsuf[a] = findParent(dsuf[a]);
+    }
+}
