@@ -1,0 +1,48 @@
+class Solution {
+    public int[] sortArray(int[] nums) {
+        return mergeSort(0, nums.length-1, nums);
+    }
+    
+    int[] mergeSort(int lo, int hi, int[] nums){
+        if(lo > hi) return new int[0];
+        if(lo == hi) return new int[]{nums[lo]};
+        int mid = lo + (hi - lo) / 2;
+        int[] leftArray = new int[mid+1];
+        int[] rightArray = new int[hi-mid];
+        for(int i=lo; i<mid+1; i++){
+            leftArray[i] = nums[i];
+        }
+        for(int j=mid+1; j<=hi; j++){
+            rightArray[j-mid-1] = nums[j];
+        }
+        int[] leftSorted = mergeSort(lo, mid, nums);
+        int[] rightSorted = mergeSort(mid + 1, hi, nums);
+        
+        int[] sorted = sortArray(leftSorted, rightSorted);
+        return sorted;
+    }
+    
+    int[] sortArray(int[] leftArray, int[] rightArray){
+        int i=0, j=0, counter=0;
+        int[] res = new int[leftArray.length + rightArray.length];
+        while(i < leftArray.length || j < rightArray.length && counter < res.length){
+            if(i < leftArray.length && j < rightArray.length){
+                if(leftArray[i] < rightArray[j]){
+                    res[counter++] = leftArray[i++];
+                }
+                else{
+                    res[counter++] = rightArray[j++];
+                }
+            }
+            else{
+                if(i<leftArray.length){
+                    res[counter++] = leftArray[i++];
+                }
+                else{
+                    res[counter++] = rightArray[j++];
+                }
+            }
+        }
+        return res;
+    }
+}
