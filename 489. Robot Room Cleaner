@@ -1,0 +1,60 @@
+/**
+ * // This is the robot's control interface.
+ * // You should not implement it, or speculate about its implementation
+ * interface Robot {
+ *     // Returns true if the cell in front is open and robot moves into the cell.
+ *     // Returns false if the cell in front is blocked and robot stays in the current cell.
+ *     public boolean move();
+ *
+ *     // Robot will stay in the same cell after calling turnLeft/turnRight.
+ *     // Each turn will be 90 degrees.
+ *     public void turnLeft();
+ *     public void turnRight();
+ *
+ *     // Clean the current cell.
+ *     public void clean();
+ * }
+ */
+
+class Solution {
+    public void cleanRoom(Robot robot) {
+        backtrack(robot, 0, 0, 0, new HashSet<String>());
+    }
+    
+    private void backtrack(Robot r, int x, int y, int dir, HashSet<String> set){
+        String curIndex = x+ "_" +y;
+        if(set.contains(curIndex)) return;
+        
+        r.clean();
+        set.add(curIndex);
+        
+        for(int k=0; k<4; k++){
+            if(r.move()){
+                int newX = x, newY = y;
+                switch(dir){
+                    case 0: 
+                        newY += 1;
+                        break;
+                    case 90: 
+                        newX += 1;
+                        break;
+                    case 180:
+                        newY -= 1;
+                        break;
+                    case 270:
+                        newX -= 1;
+                        break;
+                }
+                backtrack(r, newX, newY, dir, set);
+                r.turnLeft();
+                r.turnLeft();
+                r.move();
+                r.turnLeft();
+                r.turnLeft();
+            }
+            dir += 90;
+            dir %= 360;
+            r.turnRight();
+        }
+    }
+}
