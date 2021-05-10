@@ -1,0 +1,54 @@
+class Solution {
+    int min = Integer.MAX_VALUE;
+    int[] rows = {1,0,0,-1};
+    int[] cols = {0,1,-1,0};
+    int[][] matrix;
+    int[][] reach;
+    public int shortestDistance(int[][] grid) {
+        matrix = new int[grid.length][grid[0].length];
+        reach = new int[grid.length][grid[0].length];
+        int totalBuildings = 0;
+        for(int i=0; i<grid.length; i++){
+            for(int j=0; j<grid[0].length; j++){
+                if(grid[i][j] == 1){
+                    bfs(grid, i, j);
+                    totalBuildings++;
+                }
+            }
+        }
+        
+        
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j] < min && reach[i][j] == totalBuildings) {
+                    min = Math.min(min, matrix[i][j]);
+                }
+            }
+        }
+        return min == Integer.MAX_VALUE ? -1 : min;
+    }
+    
+    void bfs(int[][] grid, int i, int j){
+        Queue<int[]> queue = new LinkedList<>();
+        queue.add(new int[]{i, j});
+        int[][] visited = new int[grid.length][grid[0].length];
+        int dist = 0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            dist++;
+            for(int m=0; m<size; m++){
+                int[] polled = queue.poll();
+                for(int k=0; k<rows.length; k++){
+                    int newRow = rows[k] + polled[0];
+                    int newCol = cols[k] + polled[1];
+                    if(newRow < 0 || newCol < 0 || newRow >= grid.length || newCol >= grid[0].length || grid[newRow][newCol] == 2 || grid[newRow][newCol] == 1 || visited[newRow][newCol] == -1) continue;
+                    queue.add(new int[]{newRow, newCol});
+                    visited[newRow][newCol] = -1;
+                    reach[newRow][newCol]++;
+                    matrix[newRow][newCol] += dist;
+                }
+            }
+            
+        }
+    }
+}
