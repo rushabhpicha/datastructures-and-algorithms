@@ -1,0 +1,30 @@
+class Solution {
+    public int totalFruit(int[] tree) {
+        if(tree == null || tree.length == 0) return 0;
+        HashMap<Integer, Integer> map = new HashMap<>();
+        
+        int i=0, j=0, count=0, max = 0;
+        
+        while(j < tree.length){
+            map.put(tree[j], map.getOrDefault(tree[j], 0) + 1);
+            if(map.size() > 2){
+                count++;
+            }
+            
+            while(i < tree.length && count > 0){
+                if(map.containsKey(tree[i]) ){
+                     map.put(tree[i], map.get(tree[i]) - 1);
+                    if(map.get(tree[i]) == 0){
+                        map.remove(tree[i]);
+                        if(map.size() == 2) 
+                            count--;
+                    }
+                }
+                 i++;
+            }
+            max = Math.max(max, j-i+1);
+            j++;
+        }
+                   return max;
+    }
+}
