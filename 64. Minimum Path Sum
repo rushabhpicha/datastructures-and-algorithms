@@ -1,0 +1,15 @@
+class Solution {
+    public int minPathSum(int[][] grid) {
+        int[][] memo = new int[grid.length][grid[0].length];
+        return minSum(memo, grid, grid.length - 1, grid[0].length - 1);
+    }
+    
+    int minSum(int[][] memo, int[][] grid, int i, int j){
+        if(i==0 && j==0) return grid[i][j];
+        if(i<0 || j<0) return Integer.MAX_VALUE; 
+        if(memo[i][j] != 0) return memo[i][j];
+        int left = 0, right = 0;
+        
+        return memo[i][j] = grid[i][j] + Math.min(minSum(memo, grid, i-1, j), minSum(memo, grid, i, j-1));
+    }
+}
