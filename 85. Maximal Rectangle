@@ -1,0 +1,54 @@
+class Solution {
+    public int maximalRectangle(char[][] matrix) {
+        if(matrix == null || matrix.length == 0) return 0;
+        int[] array = new int[matrix[0].length];
+        int max = 0;
+        for(int i=0; i<matrix.length; i++){
+            for(int j=0; j<matrix[0].length; j++){
+                if(matrix[i][j] == '1'){
+                    array[j] += 1;
+                }
+                else{
+                    array[j] = 0;
+                }
+            }
+            max = Math.max(max, largestRectangleArea(array));
+        }
+        return max;
+    }
+    
+    public int largestRectangleArea(int[] heights) {
+        List<Integer> gtl = new ArrayList<>();
+        List<Integer> gtr = new ArrayList<>();
+        
+        Stack<Integer> stack = new Stack();
+        for(int i=0; i<heights.length; i++){
+            while(!stack.isEmpty() && heights[stack.peek()] >= heights[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()) gtl.add(-1);
+            else gtl.add(stack.peek());
+            stack.push(i);
+        }
+        
+        stack.clear();
+        for(int i=heights.length-1; i>=0; i--){
+            while(!stack.isEmpty() && heights[stack.peek()] >= heights[i]){
+                stack.pop();
+            }
+            if(stack.isEmpty()) gtr.add(heights.length);
+            else gtr.add(stack.peek());
+            stack.push(i);
+        }
+        
+        Collections.reverse(gtr);
+        // System.out.println(gtl);
+        // System.out.println(gtr);
+        int max=0;
+        for(int i=0; i<gtr.size(); i++){
+            max = Math.max(max, (gtr.get(i) - gtl.get(i) - 1) * heights[i]);
+        }
+        return max;
+        
+    }
+}
