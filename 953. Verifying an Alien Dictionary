@@ -1,0 +1,30 @@
+class Solution {
+    public boolean isAlienSorted(String[] words, String order) {
+        HashMap<Character, Integer> map = new HashMap<>();
+        for(int i=0; i<order.length(); i++){
+            map.put(order.charAt(i), i);
+        }
+        
+        for(int i=0; i<words.length - 1; i++){
+            String firstWord = words[i];
+            String secondWord = words[i+1];
+            
+            if(!checkBoolean(firstWord, secondWord, map))
+                return false;
+        }
+        return true;
+    }
+    
+    boolean checkBoolean(String first, String second, HashMap<Character, Integer> map){
+        
+        for(int i=0; i<first.length() && i < second.length(); i++){
+            int index1 = map.get(first.charAt(i));
+            int index2 = map.get(second.charAt(i));
+            
+            if(index1 == index2) continue;
+            else if(index1 > index2) return false;
+            else return true;
+        }
+        return first.length() <= second.length();
+    }
+}
