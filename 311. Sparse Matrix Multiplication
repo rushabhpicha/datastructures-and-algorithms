@@ -1,0 +1,53 @@
+class Solution {
+    public int[][] multiply(int[][] mat1, int[][] mat2) {
+//         int[][] res = new int[mat1.length][mat2[0].length];
+        
+//         for(int i=0; i<mat1.length; i++){
+//             for(int j=0; j<mat2[0].length; j++){
+//                 for(int k=0; k<mat2.length; k++){
+//                     res[i][j] += (mat1[i][k] * mat2[k][j]);
+//                 }
+//             }
+//         }
+        
+//         return res;
+        
+        int[][] res = new int[mat1.length][mat2[0].length];
+        HashMap<Integer, HashMap<Integer, Integer>> map1 = new HashMap();
+        for(int i=0; i<mat1.length; i++){
+            for(int j=0; j<mat1[0].length; j++){
+                if(mat1[i][j] != 0){
+                    map1.putIfAbsent(i, new HashMap<Integer, Integer>());
+                    map1.get(i).put(j, mat1[i][j]);
+                }
+            }
+        }
+        
+        HashMap<Integer, HashMap<Integer, Integer>> map2 = new HashMap();
+        for(int i=0; i<mat2[0].length; i++){
+            for(int j=0; j<mat2.length; j++){
+                if(mat2[j][i] != 0){
+                    map2.putIfAbsent(i, new HashMap<Integer, Integer>());
+                    map2.get(i).put(j, mat2[j][i]);
+                }
+            }
+        }
+        
+        for(int i=0; i<res.length; i++){
+            for(int j=0; j<res[0].length; j++){
+                int ans = 0;
+                if(map1.containsKey(i) && map2.containsKey(j)){
+                    HashMap<Integer, Integer> row = map1.get(i);
+                    HashMap<Integer, Integer> col = map2.get(j);
+                    for(int key : row.keySet()){
+                        if(col.containsKey(key)){
+                            ans = ans + row.get(key) * col.get(key);
+                        }
+                    }
+                }
+                res[i][j] = ans;
+            }
+        }
+        return res;
+    }
+}
