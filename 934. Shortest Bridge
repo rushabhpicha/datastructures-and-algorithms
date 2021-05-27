@@ -1,0 +1,48 @@
+class Solution {
+    int[] rows = {1,0,0,-1};
+    int[] cols = {0,1,-1,0};
+    Queue<int[]> queue = new LinkedList<>();
+    public int shortestBridge(int[][] matrix) {
+        int min = 5656;
+        boolean flag = false;
+        for(int i=0; i<matrix.length && flag == false; i++){
+            for(int j=0; j<matrix[0].length && flag == false; j++){
+                if(matrix[i][j] == 1){
+                    dfs(matrix, i, j);
+                    flag = true;
+                }
+            }
+        }
+        
+        int dist = 0;
+        while(!queue.isEmpty()){
+            int size = queue.size();
+            for(int k=0; k<size; k++){
+                int[] polled = queue.poll();
+                if(matrix[polled[0]][polled[1]] == 1) return polled[2]-1;
+                for(int m=0; m<rows.length; m++){
+                    int newRow = polled[0] + rows[m];
+                    int newCol = polled[1] + cols[m];
+                    if(newRow < 0 || newRow >= matrix.length || newCol < 0 || newCol >= matrix[0].length || matrix[newRow][newCol] == 2) continue;
+                    if(matrix[newRow][newCol] == 1) return polled[2];
+                    matrix[newRow][newCol] = 2;
+                    queue.add(new int[]{newRow, newCol, polled[2] + 1});
+                }
+            }
+        }
+        return -1;
+    }
+
+    void dfs(int[][] matrix, int i, int j){
+        matrix[i][j] = 2;
+        queue.add(new int[]{i, j, 0});
+        for(int k=0; k<rows.length; k++){
+            int newRow = rows[k] + i;
+            int newCol = cols[k] + j;
+            if(newRow < 0 || newCol < 0 || newRow >= matrix.length || newCol >= matrix[0].length || matrix[newRow][newCol] == 2 || matrix[newRow][newCol] == 0) continue;
+            
+            dfs(matrix, newRow, newCol);
+        }
+        return;
+    }
+}
